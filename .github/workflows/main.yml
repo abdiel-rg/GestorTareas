@@ -22,8 +22,8 @@ jobs:
       run: dotnet publish GestorTareas.csproj -c Release -o release --nologo
     
     # changes the base-tag in index.html from '/' to 'GestorTareas' to match GitHub Pages repository subdirectory
-    - name: Change base-tag in index.html from / to GestorTareas
-      run: sed -i 's/<base href="\/" \/>/<base href="\/GestorTareas\/" \/>/g' release/wwwroot/index.html
+    #- name: Change base-tag in index.html from / to GestorTareas
+    #  run: sed -i 's/<base href="\/" \/>/<base href="\/GestorTareas\/" \/>/g' release/wwwroot/index.html
     
     # copy index.html to 404.html to serve the same file when a file is not found
     #- name: copy index.html to 404.html
