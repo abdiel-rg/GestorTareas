@@ -1,4 +1,5 @@
 using GestorTareas.Data;
+using GestorTareas.Data.Repositories;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,7 @@ namespace GestorTareas
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
             builder.Services.AddScoped<LocalStorageRepository>();
+            builder.Services.AddScoped<TareaRepository>();
 
             await builder.Build().RunAsync();
         }
