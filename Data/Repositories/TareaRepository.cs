@@ -54,15 +54,13 @@ namespace GestorTareas.Data.Repositories
 
         public async Task<List<Tarea>> GetAll()
         {
-            try
-            {
-                Tareas = (await LocalStorageRepository.Get<List<Tarea>>(_LocalStorageEntryKey))!;
-            }
-            catch (Exception)
+            List<Tarea>? tareas = await LocalStorageRepository.Get<List<Tarea>>(_LocalStorageEntryKey);
+            if (tareas is null)
             {
                 Tareas = new();
                 await SaveChangesAsync();
             }
+            else Tareas = tareas;
             return Tareas;
         }
 
