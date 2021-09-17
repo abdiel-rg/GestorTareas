@@ -1,0 +1,40 @@
+﻿@page "/GestionarTarea/{ID?}"
+@using System.Text.Json
+@using GestorTareas.Data.Repositories
+@inject TareaRepository tareaRepository
+@inject NavigationManager Nav
+
+<h3>GestionarTarea</h3>
+
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+
+			<EditForm Model="tarea" OnValidSubmit="() => SaveTarea(tarea)" novalidate>
+				<DataAnnotationsValidator />
+
+				<div class="form-floating mb-3">
+					<InputText class="form-control" @bind-Value="tarea.Nombre" placeholder="" />
+					<label class="form-label">Nombre:</label>
+				</div>
+
+				<div class="form-floating mb-3">
+					<InputText class="form-control" @bind-Value="tarea.Materia" placeholder="" />
+					<label class="form-label">Materia:</label>
+				</div>
+
+				<div class="form-floating mb-3">
+					<input class="form-control" type="datetime-local" @bind="tarea.Fecha" placeholder="" @oninput="e => tarea.Fecha = DateTime.Parse((e.Value!.ToString())!)" />
+					<label class="form-label">Fecha:</label>
+				</div>
+
+				<div class="form-floating mb-3">
+					<InputTextArea class="form-control" @bind-Value="tarea.Comentarios" placeholder="" />
+					<label class="form-label">Comentarios:</label>
+				</div>
+
+				<button class="btn btn-primary" type="submit">@ButtonText</button>
+			</EditForm>
+		</div>
+	</div>
+</div>

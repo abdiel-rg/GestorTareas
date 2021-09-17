@@ -1,0 +1,48 @@
+﻿@using GestorTareas.Data
+@using System.Diagnostics
+@using GestorTareas.Data.Repositories
+@inject TareaRepository tareaRepository
+
+<h3>Lista de Tareas</h3>
+
+<a href="/GestionarTarea" class="btn btn-primary mb-3">Agregar Tarea</a>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12">
+			<table class="table table-sm table-responsive-sm table-hover table-bordered align-middle centered-text">
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Materia</th>
+						<th>Comentarios</th>
+						<th>Fecha</th>
+						<th>Hora</th>
+						<th @onclick="() => SortTareas(true)">TiempoRestante @(!SortAscending ? "↑" : "↓")</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<Virtualize TItem="Tarea" Items="Tareas" Context="tarea">
+						<ItemContent>
+							<tr class="@(tarea.TiempoRestante.Finalizo ? "table-danger" : "")">
+								<td>@tarea.Nombre</td>
+								<td>@tarea.Materia</td>
+								<td>
+									<textarea class="no-resize" readonly="readonly" disabled="disabled">@tarea.Comentarios</textarea>
+								</td>
+								<td>@tarea.Fecha.ToString("ddd dd MMM yyyy")</td>
+								<td>@tarea.Fecha.ToString("HH:mm")</td>
+								<td>@tarea.TiempoRestante.Diferencia.ToString("dd' días 'hh':'mm':'ss")</td>
+								<td>
+									<a href="/GestionarTarea/@tarea.ID" class="btn btn-success">Editar</a>
+									<button class="btn btn-danger" @onclick="async () => await RemoveTarea(tarea)">Borrar</button>
+								</td>
+							</tr>
+						</ItemContent>
+					</Virtualize>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

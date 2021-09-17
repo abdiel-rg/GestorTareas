@@ -1,0 +1,11 @@
+﻿textarea {
+    resize: none;
+}
+
+.centered-text {
+    text-align: center;
+}
+
+.justified-text {
+    text-align: justify;
+}
