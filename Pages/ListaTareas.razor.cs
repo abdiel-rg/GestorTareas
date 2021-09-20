@@ -8,19 +8,29 @@ namespace GestorTareas.Pages
     public partial class ListaTareas
     {
         private List<Tarea> Tareas { get; set; } = new();
-        private bool SortAscending { get; set; } = false;
+
+        private SortOrder CurrentSortOrder { get; set; } = SortOrder.Ascending;
 
         private async Task GetData()
         {
             Tareas = await tareaRepository.GetAll();
-            SortTareas();
+            SortTareas(CurrentSortOrder);
         }
 
-        private void SortTareas()
+        private void SortTareas(SortOrder sortOrder)
         {
-            Tareas.Sort((a, b) => (SortAscending ? -1 : 1) * a.TiempoRestante.CompareTo(b.TiempoRestante));
-            SortAscending = !SortAscending;
-            StateHasChanged();
+            CurrentSortOrder = sortOrder;
+            switch (sortOrder)
+            {
+                case SortOrder.Ascending:
+                    Tareas.Sort((a, b) => a.TiempoRestante.CompareTo(b.TiempoRestante));
+                    break;
+                case SortOrder.Descending:
+                    Tareas.Sort((a, b) => b.TiempoRestante.CompareTo(a.TiempoRestante));
+                    break;
+                default:
+                    break;
+            }
         }
 
         private async Task RemoveTarea(Tarea tarea)

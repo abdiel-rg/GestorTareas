@@ -5,7 +5,7 @@
 
 <h3>Lista de Tareas</h3>
 
-<a href="GestionarTarea" class="btn btn-primary mb-3">Agregar Tarea</a>
+<a href="/GestionarTarea" class="btn btn-primary mb-3">Agregar Tarea</a>
 
 <div class="container-fluid">
 	<div class="row">
@@ -18,7 +18,16 @@
 						<th>Comentarios</th>
 						<th>Fecha</th>
 						<th>Hora</th>
-						<th @onclick="() => SortTareas()">TiempoRestante @(SortAscending ? "↑" : "↓")</th>
+						<th>
+							Tiempo Restante
+							<div class="btn-group btn-group-sm" role="group">
+								<input type="radio" class="btn-check" name="btnSort" id="btnSortAscending" @onclick="() => SortTareas(SortOrder.Ascending)" checked />
+								<label class="btn btn-outline-primary" for="btnSortAscending">↑</label>
+
+								<input type="radio" class="btn-check" name="btnSort" id="btnSortDescending" @onclick="() => SortTareas(SortOrder.Descending)" />
+								<label class="btn btn-outline-primary" for="btnSortDescending">↓</label>
+							</div>
+						</th>
 						<th></th>
 					</tr>
 				</thead>
