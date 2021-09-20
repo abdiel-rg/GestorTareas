@@ -18,7 +18,7 @@
 						<th>Comentarios</th>
 						<th>Fecha</th>
 						<th>Hora</th>
-						<th @onclick="() => SortTareas(true)">TiempoRestante @(!SortAscending ? "↑" : "↓")</th>
+						<th @onclick="() => SortTareas()">TiempoRestante @(SortAscending ? "↑" : "↓")</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -35,8 +35,10 @@
 								<td>@tarea.Fecha.ToString("HH:mm")</td>
 								<td>@tarea.TiempoRestante.Diferencia.ToString("dd' días 'hh':'mm':'ss")</td>
 								<td>
-									<a href="GestionarTarea/@tarea.ID" class="btn btn-success">Editar</a>
-									<button class="btn btn-danger" @onclick="async () => await RemoveTarea(tarea)">Borrar</button>
+									<div class="btn-group" role="group">
+										<a href="GestionarTarea/@tarea.ID.ToString()" class="btn btn-success">Editar</a>
+										<button class="btn btn-danger" @onclick="async () => await RemoveTarea(tarea)">Borrar</button>
+									</div>
 								</td>
 							</tr>
 						</ItemContent>

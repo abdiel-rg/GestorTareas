@@ -7,20 +7,19 @@ namespace GestorTareas.Pages
 {
     public partial class ListaTareas
     {
-        private List<Tarea> Tareas = new();
-        private bool SortAscending = true;
-
-        protected override bool ShouldRender() => true;
+        private List<Tarea> Tareas { get; set; } = new();
+        private bool SortAscending { get; set; } = true;
 
         private async Task GetData()
         {
             Tareas = await tareaRepository.GetAll();
+            SortTareas();
         }
 
-        private void SortTareas(bool changeCondition = false)
+        private void SortTareas()
         {
-            Tareas.Sort((a, b) => SortAscending ? a.TiempoRestante.CompareTo(b.TiempoRestante) : b.TiempoRestante.CompareTo(a.TiempoRestante));
-            if (changeCondition) SortAscending = !SortAscending;
+            Tareas.Sort((a, b) => (SortAscending ? -1 : 1) * a.TiempoRestante.CompareTo(b.TiempoRestante));
+            SortAscending = !SortAscending;
             StateHasChanged();
         }
 
@@ -33,7 +32,6 @@ namespace GestorTareas.Pages
         protected override async Task OnInitializedAsync()
         {
             await GetData();
-            SortTareas(true);
 
             _ = InvokeAsync(async () =>
             {
