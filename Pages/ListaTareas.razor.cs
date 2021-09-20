@@ -8,7 +8,7 @@ namespace GestorTareas.Pages
     public partial class ListaTareas
     {
         private List<Tarea> Tareas { get; set; } = new();
-        private bool SortAscending { get; set; } = true;
+        private bool SortAscending { get; set; } = false;
 
         private async Task GetData()
         {
