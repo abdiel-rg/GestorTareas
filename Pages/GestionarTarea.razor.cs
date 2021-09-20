@@ -26,7 +26,7 @@ namespace GestorTareas.Pages
         {
             if ((await TareaABuscar) is not null) await tareaRepository.Update(tarea);
             else await tareaRepository.Add(tarea);
-            Nav.NavigateTo("/");
+            Nav.NavigateTo("");
         }
 
         protected override async Task OnInitializedAsync()
