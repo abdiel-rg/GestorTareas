@@ -5,7 +5,7 @@
 
 <h3>Lista de Tareas</h3>
 
-<a href="/GestionarTarea" class="btn btn-primary mb-3">Agregar Tarea</a>
+<a href="GestionarTarea" class="btn btn-primary mb-3">Agregar Tarea</a>
 
 <div class="container-fluid">
 	<div class="row">
@@ -35,7 +35,7 @@
 								<td>@tarea.Fecha.ToString("HH:mm")</td>
 								<td>@tarea.TiempoRestante.Diferencia.ToString("dd' días 'hh':'mm':'ss")</td>
 								<td>
-									<a href="/GestionarTarea/@tarea.ID" class="btn btn-success">Editar</a>
+									<a href="GestionarTarea/@tarea.ID" class="btn btn-success">Editar</a>
 									<button class="btn btn-danger" @onclick="async () => await RemoveTarea(tarea)">Borrar</button>
 								</td>
 							</tr>
