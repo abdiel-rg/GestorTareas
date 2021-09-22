@@ -26,6 +26,8 @@ namespace GestorTareas.Data
             };
         }
 
+        public async Task<string?> Get(string key) => await JSRuntime.InvokeAsync<string>("localStorage.getItem", key);
+
         public async Task Remove(string key) => await JSRuntime.InvokeVoidAsync("localStorage.removeItem", key);
     }
 }
