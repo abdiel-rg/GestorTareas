@@ -34,8 +34,6 @@ namespace GestorTareas.Pages
             if (ID is not null)
                 if ((await TareaABuscar) is null) Nav.NavigateTo("/");
                 else tarea = (await TareaABuscar)!;
-
-            StateHasChanged();
         }
     }
 }

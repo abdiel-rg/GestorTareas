@@ -8,7 +8,7 @@ namespace GestorTareas.Data.Repositories
 {
     public sealed class TareaRepository : IGenericRepository<Tarea>
     {
-        private const string _LocalStorageEntryKey = "ListaTareas";
+        public static readonly string LocalStorageEntryKey = "ListaTareas";
 
         private LocalStorageRepository LocalStorageRepository { get; init; }
 
@@ -54,7 +54,7 @@ namespace GestorTareas.Data.Repositories
 
         public async Task<List<Tarea>> GetAll()
         {
-            List<Tarea>? tareas = await LocalStorageRepository.Get<List<Tarea>>(_LocalStorageEntryKey);
+            List<Tarea>? tareas = await LocalStorageRepository.Get<List<Tarea>>(LocalStorageEntryKey);
             if (tareas is null)
             {
                 Tareas = new();
@@ -64,6 +64,6 @@ namespace GestorTareas.Data.Repositories
             return Tareas;
         }
 
-        public async Task SaveChangesAsync() => await LocalStorageRepository.Save(_LocalStorageEntryKey, Tareas);
+        public async Task SaveChangesAsync() => await LocalStorageRepository.Save(LocalStorageEntryKey, Tareas);
     }
 }
