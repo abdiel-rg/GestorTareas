@@ -1,0 +1,50 @@
+﻿@inject IJSRuntime JSRuntime
+
+<div class="position-fixed top-50 start-50 translate-middle p-3" style="z-index: 11">
+	<div id="@ToastID" class="toast" data-bs-delay="@ToastDelay" role="alert">
+		<div class="toast-header bg-danger bg-opacity-75 text-white">
+			@ToastHeader
+			<span class=" oi oi-warning rounded me-2 text-danger" />
+			<strong class="me-auto">@ToastTitle</strong>
+			<small>@ToastDetails</small>
+			<button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+		</div>
+		<div class="toast-body">
+			@ToastBody
+		</div>
+	</div>
+</div>
+
+@code {
+	private IJSObjectReference? ToastModule { get; set; }
+
+
+	[Parameter]
+	public string ToastID { get; set; } = $"toast_{Guid.NewGuid().ToString().Replace("-", "")}";
+
+	[Parameter]
+	public string? ToastTitle { get; set; }
+
+	[Parameter]
+	public string? ToastDetails { get; set; }
+
+	[Parameter]
+	public int ToastDelay { get; set; } = 5000;
+
+
+	[Parameter]
+	public RenderFragment? ToastHeader { get; set; }
+
+	[Parameter]
+	public RenderFragment? ToastBody { get; set; }
+
+
+	public async Task ShowToast() => await ToastModule!.InvokeVoidAsync("showToast", ToastID);
+
+	public async Task HideToast() => await ToastModule!.InvokeVoidAsync("hideToast", ToastID);
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender) ToastModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./scripts/Toast.js");
+	}
+}
