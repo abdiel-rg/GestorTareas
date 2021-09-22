@@ -2,14 +2,6 @@
 textarea[b-wovdopmxyz] {
     resize: none;
 }
-
-.centered-text[b-wovdopmxyz] {
-    text-align: center;
-}
-
-.justified-text[b-wovdopmxyz] {
-    text-align: justify;
-}
 /* /Shared/MainLayout.razor.rz.scp.css */
 .page[b-sm7rh26i9m] {
     position: relative;
