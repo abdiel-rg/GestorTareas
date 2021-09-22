@@ -1,0 +1,49 @@
+﻿@using GestorTareas.Components
+@inject LocalStorageRepository localStorageRepository
+@inject NavigationManager Nav
+@page "/Opciones"
+
+<h3 class="mb-3">
+	<span class="oi oi-cog me-1" /> Opciones
+</h3>
+
+<Toast ToastID="toastComponent" ToastTitle="Error" @ref="ToastComponent">
+	<ToastBody>
+		<p>Formato inválido</p>
+		<p>Intente subir un archivo .json válido, es decir, exportado desde el botón Exportar Datos</p>
+	</ToastBody>
+</Toast>
+
+<div class="input-group">
+	<InputFile accept=".json" class="form-control" OnChange="e => BrowserFile = e.File" />
+	<button @onclick="ImportarDatos" class="btn btn-primary" type="button">
+		Importar Datos <span class="oi oi-data-transfer-upload mx-2" />
+	</button>
+</div>
+
+<hr class="my-5" />
+
+<div class="d-flex justify-content-center">
+	<button data-bs-toggle="modal" data-bs-target="#modalExportarDatos" class="btn btn-primary" @onclick="ExportarDatos">
+		<span class="oi oi-data-transfer-download mx-2" /> Exportar Datos
+	</button>
+</div>
+
+
+<Modal ModalID="modalExportarDatos" ModalTitle="Exportar Datos" ShowButton="false">
+	<ModalBody>
+		<p class="centered-text">
+			<a href="@GeneratedFile">Descargar Archivo</a>
+		</p>
+		<ol class="justified-text">
+			<li>Haga click derecho (o deje presionado, si está en un dispositivo móvil) a "Descargar Archivo"</li>
+			<li>Seleccione cualquiera de estas opciones, dependiendo del idioma de su navegador:</li>
+			<ul>
+				<li>Guardar como...</li>
+				<li>Save as....</li>
+			</ul>
+		</ol>
+	</ModalBody>
+</Modal>
+
+
