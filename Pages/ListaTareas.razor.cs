@@ -20,15 +20,11 @@ namespace GestorTareas.Pages
         private void SortTareas(SortOrder sortOrder)
         {
             CurrentSortOrder = sortOrder;
-            Tareas.Sort((a, b) =>
+            Tareas.Sort((a, b) => true switch
             {
-                if (a.TiempoRestante.Finalizo) return -1;
-                return (sortOrder switch
-                {
-                    SortOrder.Ascending => 1,
-                    SortOrder.Descending => -1,
-                    _ => 0,
-                }) * a.TiempoRestante.CompareTo(b.TiempoRestante);
+                true when a.TiempoRestante.Finalizo => -1,
+                true when b.TiempoRestante.Finalizo => 1,
+                _ => (int)sortOrder * a.TiempoRestante.CompareTo(b.TiempoRestante),
             });
         }
 

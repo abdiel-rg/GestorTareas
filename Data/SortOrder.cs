@@ -7,8 +7,8 @@ namespace GestorTareas.Data
 {
     public enum SortOrder
     {
-        Ascending,
-        Descending,
-        NoSort
+        Descending = -1,
+        NoSort = 0,
+        Ascending = 1,
     }
 }
