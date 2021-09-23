@@ -20,17 +20,16 @@ namespace GestorTareas.Pages
         private void SortTareas(SortOrder sortOrder)
         {
             CurrentSortOrder = sortOrder;
-            switch (sortOrder)
+            Tareas.Sort((a, b) =>
             {
-                case SortOrder.Ascending:
-                    Tareas.Sort((a, b) => a.TiempoRestante.CompareTo(b.TiempoRestante));
-                    break;
-                case SortOrder.Descending:
-                    Tareas.Sort((a, b) => b.TiempoRestante.CompareTo(a.TiempoRestante));
-                    break;
-                default:
-                    break;
-            }
+                if (a.TiempoRestante.Finalizo) return -1;
+                return (sortOrder switch
+                {
+                    SortOrder.Ascending => 1,
+                    SortOrder.Descending => -1,
+                    _ => 0,
+                }) * a.TiempoRestante.CompareTo(b.TiempoRestante);
+            });
         }
 
         private async Task RemoveTarea(Tarea tarea)
