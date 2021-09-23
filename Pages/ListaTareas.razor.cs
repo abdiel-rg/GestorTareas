@@ -5,7 +5,7 @@ using GestorTareas.Data;
 
 namespace GestorTareas.Pages
 {
-    public partial class ListaTareas
+    public partial class ListaTareas : IDisposable
     {
         private List<Tarea> Tareas { get; set; } = new();
 
@@ -38,18 +38,27 @@ namespace GestorTareas.Pages
             await GetData();
         }
 
+        private bool keepLoopRunning = true;
+
         protected override async Task OnInitializedAsync()
         {
             await GetData();
 
             _ = InvokeAsync(async () =>
             {
-                while (true)
+                do
                 {
                     await Task.Delay(TimeSpan.FromSeconds(1));
+                    SortTareas(CurrentSortOrder);
                     StateHasChanged();
-                }
+                } while (keepLoopRunning);
             });
+        }
+
+        public virtual void Dispose()
+        {
+            keepLoopRunning = false;
+            GC.SuppressFinalize(this);
         }
     }
 }
