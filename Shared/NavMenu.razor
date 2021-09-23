@@ -1,32 +1,18 @@
-﻿﻿<div class="top-row pl-4 navbar navbar-dark flex-column">
-    <a class="navbar-brand" style="text-align: center;" href="">Gestor de Tareas</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-list" aria-hidden="true"></span> Lista de Tareas
-            </NavLink>
-        </li>
-		<li class="nav-item px-3">
-			<NavLink class="nav-link" href="Opciones">
-				<span class="oi oi-cog" aria-hidden="true"></span> Opciones
-			</NavLink>
-		</li>
-    </ul>
-</div>
-
-@code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}
+﻿<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="">Gestor de Tareas</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<div class="navbar-nav navbar-nav-scroll d-inline-flex justify-content-evenly flex-wrap container-fluid">
+				<a class="nav-link" href="">
+					<span class="oi oi-list me-1" /> Lista de Tareas
+				</a>
+				<a class="nav-link" href="Opciones">
+					<span class="oi oi-cog me-1" /> Opciones
+				</a>
+			</div>
+		</div>
+	</div>
+</nav>
