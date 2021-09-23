@@ -14,8 +14,8 @@
 	</ToastBody>
 </Toast>
 
-<div class="input-group">
-	<InputFile accept=".json" class="form-control" OnChange="e => BrowserFile = e.File" />
+<InputFile accept=".json" class="form-control mb-3" OnChange="e => BrowserFile = e.File" />
+<div class="d-flex justify-content-center">
 	<button @onclick="ImportarDatos" class="btn btn-primary" type="button">
 		Importar Datos <span class="oi oi-data-transfer-upload mx-2" />
 	</button>
@@ -25,7 +25,7 @@
 
 <div class="d-flex justify-content-center">
 	<button data-bs-toggle="modal" data-bs-target="#modalExportarDatos" class="btn btn-primary" @onclick="ExportarDatos">
-		<span class="oi oi-data-transfer-download mx-2" /> Exportar Datos
+		Exportar Datos <span class="oi oi-data-transfer-download mx-2" />
 	</button>
 </div>
 
