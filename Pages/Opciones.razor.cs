@@ -24,18 +24,14 @@ namespace GestorTareas.Pages
 
         private async Task<List<Tarea>> ProcesarDatos(Stream stream)
         {
-            List<Tarea> tareas = new();
             try
             {
                 DatosValidos = true;
-                tareas =  (await JsonSerializer.DeserializeAsync<List<Tarea>>(stream))!;
-                Console.WriteLine("Válido");
-                return tareas;
+                return (await JsonSerializer.DeserializeAsync<List<Tarea>>(stream))!;
             }
             catch (Exception)
             {
                 DatosValidos = false;
-                Console.WriteLine("Inválido");
                 return new();
             }
         }
