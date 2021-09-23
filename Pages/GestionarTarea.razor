@@ -4,7 +4,10 @@
 @inject TareaRepository tareaRepository
 @inject NavigationManager Nav
 
-<h3>GestionarTarea</h3>
+<h3 class="@(ID is null ? "text-primary" : "text-success")">
+	<span class="oi @(ID is null ? "oi-plus" : "oi-pencil") me-1" />
+	@ButtonText
+</h3>
 
 <div class="container">
 	<div class="row">
