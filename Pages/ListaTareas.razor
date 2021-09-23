@@ -4,60 +4,56 @@
 @inject TareaRepository tareaRepository
 
 <h3 class="mb-3">
-<span class="oi oi-list me-1" /> Lista de Tareas
+	<span class="oi oi-list me-1" /> Lista de Tareas
 </h3>
 
 <a href="GestionarTarea" class="btn btn-primary mb-3">
-<span class="oi oi-plus me-1" /> Agregar Tarea
+	<span class="oi oi-plus me-1" /> Agregar Tarea
 </a>
 
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-12">
-			<table class="table table-sm table-responsive-sm table-hover table-bordered align-middle centered-text">
-				<thead>
-					<tr>
-						<th>Nombre</th>
-						<th>Materia</th>
-						<th>Comentarios</th>
-						<th>Fecha</th>
-						<th>Hora</th>
-						<th>
-							Tiempo Restante
-							<div class="btn-group btn-group-sm" role="group">
-								<input type="radio" class="btn-check" name="btnSort" id="btnSortAscending" @onclick="() => SortTareas(SortOrder.Ascending)" checked />
-								<label class="btn btn-outline-primary" for="btnSortAscending">↑</label>
+<div class="table-responsive">
+	<table class="table table-sm table-hover table-bordered align-middle centered-text">
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>Materia</th>
+				<th>Comentarios</th>
+				<th>Fecha</th>
+				<th>Hora</th>
+				<th>
+					Tiempo Restante
+					<div class="btn-group btn-group-sm" role="group">
+						<input type="radio" class="btn-check" name="btnSort" id="btnSortAscending" @onclick="() => SortTareas(SortOrder.Ascending)" checked />
+						<label class="btn btn-outline-primary" for="btnSortAscending">↑</label>
 
-								<input type="radio" class="btn-check" name="btnSort" id="btnSortDescending" @onclick="() => SortTareas(SortOrder.Descending)" />
-								<label class="btn btn-outline-primary" for="btnSortDescending">↓</label>
+						<input type="radio" class="btn-check" name="btnSort" id="btnSortDescending" @onclick="() => SortTareas(SortOrder.Descending)" />
+						<label class="btn btn-outline-primary" for="btnSortDescending">↓</label>
+					</div>
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<Virtualize TItem="Tarea" Items="Tareas" Context="tarea">
+				<ItemContent>
+					<tr class="@(tarea.TiempoRestante.Finalizo ? "table-danger" : "")">
+						<td>@tarea.Nombre</td>
+						<td>@tarea.Materia</td>
+						<td>
+							<textarea class="no-resize" readonly="readonly" disabled="disabled">@tarea.Comentarios</textarea>
+						</td>
+						<td>@tarea.Fecha.ToString("ddd dd MMM yyyy")</td>
+						<td>@tarea.Fecha.ToString("HH:mm")</td>
+						<td>@tarea.TiempoRestante.Diferencia.ToString("dd' días 'hh':'mm':'ss")</td>
+						<td>
+							<div class="btn-group" role="group">
+								<a href="GestionarTarea/@tarea.ID.ToString()" class="btn btn-success oi oi-pencil"></a>
+								<button class="btn btn-danger oi oi-trash" @onclick="async () => await RemoveTarea(tarea)"></button>
 							</div>
-						</th>
-						<th></th>
+						</td>
 					</tr>
-				</thead>
-				<tbody>
-					<Virtualize TItem="Tarea" Items="Tareas" Context="tarea">
-						<ItemContent>
-							<tr class="@(tarea.TiempoRestante.Finalizo ? "table-danger" : "")">
-								<td>@tarea.Nombre</td>
-								<td>@tarea.Materia</td>
-								<td>
-									<textarea class="no-resize" readonly="readonly" disabled="disabled">@tarea.Comentarios</textarea>
-								</td>
-								<td>@tarea.Fecha.ToString("ddd dd MMM yyyy")</td>
-								<td>@tarea.Fecha.ToString("HH:mm")</td>
-								<td>@tarea.TiempoRestante.Diferencia.ToString("dd' días 'hh':'mm':'ss")</td>
-								<td>
-									<div class="btn-group" role="group">
-										<a href="GestionarTarea/@tarea.ID.ToString()" class="btn btn-success oi oi-pencil"></a>
-										<button class="btn btn-danger oi oi-trash" @onclick="async () => await RemoveTarea(tarea)"></button>
-									</div>
-								</td>
-							</tr>
-						</ItemContent>
-					</Virtualize>
-				</tbody>
-			</table>
-		</div>
-	</div>
+				</ItemContent>
+			</Virtualize>
+		</tbody>
+	</table>
 </div>
