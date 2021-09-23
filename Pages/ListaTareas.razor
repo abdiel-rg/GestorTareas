@@ -3,13 +3,11 @@
 @using GestorTareas.Data.Repositories
 @inject TareaRepository tareaRepository
 
-<h3 class="mb-3">
-	<span class="oi oi-list me-1" /> Lista de Tareas
-</h3>
-
-<a href="GestionarTarea" class="btn btn-primary mb-3">
-	<span class="oi oi-plus me-1" /> Agregar Tarea
-</a>
+<div class="d-flex justify-content-center">
+	<a href="GestionarTarea" class="btn btn-primary mb-3">
+		<span class="oi oi-plus me-2" /> Agregar Tarea
+	</a>
+</div>
 
 <div class="table-responsive">
 	<table class="table table-sm table-hover table-bordered align-middle centered-text">
