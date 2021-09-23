@@ -4,16 +4,10 @@
 @inject TareaRepository tareaRepository
 @inject NavigationManager Nav
 
-<h3 class="@(ID is null ? "text-primary" : "text-success")">
-	<span class="oi @(ID is null ? "oi-plus" : "oi-pencil") me-1" />
-	@ButtonText
-</h3>
-
 <div class="container">
 	<div class="row">
 		<div class="col-12">
-
-			<EditForm Model="tarea" OnValidSubmit="() => SaveTarea(tarea)" novalidate>
+			<EditForm Model="tarea" OnValidSubmit="() => SaveTarea(tarea)" class="d-flex flex-column justify-content-center" novalidate>
 				<DataAnnotationsValidator />
 
 				<div class="form-floating mb-3">
@@ -36,7 +30,10 @@
 					<label class="form-label">Comentarios:</label>
 				</div>
 
-				<button class="btn btn-primary" type="submit">@ButtonText</button>
+				<button class="@ButtonClass" type="submit">
+					<span class="@ButtonIconClass me-1" />
+					@ButtonText
+				</button>
 			</EditForm>
 		</div>
 	</div>
