@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GestorTareas.Data
+namespace GestorTareas.Data.Enums
 {
     public enum SortOrder
     {
