@@ -11,7 +11,7 @@
 
 <div class="table-responsive">
 	<table class="table table-sm table-hover table-bordered align-middle centered-text">
-		<thead>
+		<thead class="align-middle">
 			<tr>
 				<th>Nombre</th>
 				<th>Materia</th>
@@ -20,12 +20,16 @@
 				<th>Hora</th>
 				<th>
 					Tiempo Restante
-					<div class="btn-group btn-group-sm" role="group">
+					<div class="btn-group btn-group-sm ms-2" role="group">
 						<input type="radio" class="btn-check" name="btnSort" id="btnSortAscending" @onclick="() => SortTareas(SortOrder.Ascending)" checked />
-						<label class="btn btn-outline-primary" for="btnSortAscending">↑</label>
+						<label class="btn btn-outline-primary" for="btnSortAscending">
+							<span class="material-icons" style="transform: rotate(180deg)">filter_list</span>
+						</label>
 
 						<input type="radio" class="btn-check" name="btnSort" id="btnSortDescending" @onclick="() => SortTareas(SortOrder.Descending)" />
-						<label class="btn btn-outline-primary" for="btnSortDescending">↓</label>
+						<label class="btn btn-outline-primary" for="btnSortDescending">
+							<span class="material-icons">filter_list</span>
+						</label>
 					</div>
 				</th>
 				<th></th>
