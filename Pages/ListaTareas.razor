@@ -47,7 +47,7 @@
 							<textarea class="no-resize" readonly="readonly" disabled="disabled">@tarea.Comentarios</textarea>
 						</td>
 						<td>@tarea.Fecha.ToString("ddd dd MMM yyyy")</td>
-						<td>@tarea.Fecha.ToString($"{FormatoHora}:mm")</td>
+						<td>@tarea.Fecha.ToString($"{FormatoHora}:mm {(FormatoHora == "hh" ? "tt" : "")}")</td>
 						<td>@tarea.TiempoRestante.Diferencia.ToString("dd' días 'hh':'mm':'ss")</td>
 						<td>
 							<div class="btn-group" role="group">
