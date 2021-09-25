@@ -14,20 +14,22 @@ namespace GestorTareas.Data
 
         public LocalStorageRepository(IJSRuntime jsRuntime) => JSRuntime = jsRuntime;
 
-        public async Task Save<T>(string key, T value) => await JSRuntime.InvokeVoidAsync("localStorage.setItem", key, JsonSerializer.Serialize(value));
+        public virtual async Task<string?> GetRawJsonOrDefault(string key, string? returnedValueIfError = default) => await JSRuntime.InvokeAsync<string?>("localStorage.getItem", key) ?? returnedValueIfError;
 
-        public async Task<T?> Get<T>(string key)
+        public virtual async Task<T?> GetOrDefault<T>(string key, T? returnedValueIfError = default)
         {
-            string json = await JSRuntime.InvokeAsync<string>("localStorage.getItem", key);
-            return json switch
-            {
-                "undefined" or null or "" => default,
-                _ => JsonSerializer.Deserialize<T>(json!),
-            };
+            string? json = await GetRawJsonOrDefault(key);
+            return json is null ? returnedValueIfError : JsonSerializer.Deserialize<T>(json!);
         }
 
-        public async Task<string?> Get(string key) => await JSRuntime.InvokeAsync<string>("localStorage.getItem", key);
+        public virtual async Task<T?> GetOrDefault<T>(string key, T? returnedValueIfError = default, params string[] errorValues)
+        {
+            string? json = await GetRawJsonOrDefault(key);
+            return (json is null || errorValues.Contains(json)) ? returnedValueIfError : JsonSerializer.Deserialize<T>(json!);
+        }
 
-        public async Task Remove(string key) => await JSRuntime.InvokeVoidAsync("localStorage.removeItem", key);
+        public virtual async Task Save<T>(string key, T value) => await JSRuntime.InvokeVoidAsync("localStorage.setItem", key, JsonSerializer.Serialize(value));
+
+        public virtual async Task Remove(string key) => await JSRuntime.InvokeVoidAsync("localStorage.removeItem", key);
     }
 }
