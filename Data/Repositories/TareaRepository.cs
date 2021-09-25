@@ -54,7 +54,7 @@ namespace GestorTareas.Data.Repositories
 
         public async Task<List<Tarea>> GetAll()
         {
-            List<Tarea>? tareas = await LocalStorageRepository.Get<List<Tarea>>(LocalStorageEntryKey);
+            List<Tarea>? tareas = await LocalStorageRepository.GetOrDefault<List<Tarea>>(LocalStorageEntryKey, default, "");
             if (tareas is null)
             {
                 Tareas = new();
