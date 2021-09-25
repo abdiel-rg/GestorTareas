@@ -2,9 +2,8 @@
 
 <div class="position-fixed top-50 start-50 translate-middle p-3" style="z-index: 11">
 	<div id="@ToastID" class="toast" data-bs-delay="@ToastDelay" role="alert">
-		<div class="toast-header bg-danger bg-opacity-75 text-white">
-			@ToastHeader
-			<span class=" oi oi-warning rounded me-2 text-danger" />
+		<div class="toast-header @ToastHeaderClass">
+			<div class="me-2">@ToastIcon</div>
 			<strong class="me-auto">@ToastTitle</strong>
 			<small>@ToastDetails</small>
 			<button type="button" class="btn-close" data-bs-dismiss="toast"></button>
@@ -36,7 +35,13 @@
 	public RenderFragment? ToastHeader { get; set; }
 
 	[Parameter]
+	public string? ToastHeaderClass { get; set; }
+
+	[Parameter]
 	public RenderFragment? ToastBody { get; set; }
+
+	[Parameter]
+	public RenderFragment? ToastIcon { get; set; }
 
 
 	public async Task ShowToast() => await ToastModule!.InvokeVoidAsync("showToast", ToastID);
