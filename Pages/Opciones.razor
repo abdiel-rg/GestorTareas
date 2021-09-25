@@ -1,49 +1,74 @@
 ﻿@using GestorTareas.Components
+@using GestorTareas.Data.Enums
 @inject LocalStorageRepository localStorageRepository
 @inject NavigationManager Nav
+@inject IJSRuntime JSRuntime
 @page "/Opciones"
 
 <h3 class="mb-3">
 	<span class="oi oi-cog me-1" /> Opciones
 </h3>
 
-<Toast ToastID="toastComponent" ToastTitle="Error" @ref="ToastComponent">
-	<ToastBody>
-		<p>Formato inválido</p>
-		<p>Intente subir un archivo .json válido, es decir, exportado desde el botón Exportar Datos</p>
-	</ToastBody>
-</Toast>
+<div class="container">
+	<div class="row">
+		<div class="col-md">
+			<Toast ToastID="toastComponent"
+				   ToastTitle="Error"
+				   ToastHeaderClass="bg-danger bg-opacity-75 text-white"
+				   @ref="ToastComponent">
+				<ToastIcon>
+					<span class="material-icons text-danger">warning</span>
+				</ToastIcon>
+				<ToastBody>
+					<p>Formato inválido</p>
+					<p>Intente subir un archivo .json válido, es decir, exportado desde el botón Exportar Datos</p>
+				</ToastBody>
+			</Toast>
 
-<InputFile accept=".json" class="form-control mb-3" OnChange="e => BrowserFile = e.File" />
-<div class="d-flex justify-content-center">
-	<button @onclick="ImportarDatos" class="btn btn-primary" type="button">
-		Importar Datos <span class="oi oi-data-transfer-upload mx-2" />
-	</button>
+			<InputFile accept=".json" class="form-control mb-3" OnChange="e => BrowserFile = e.File" />
+			<div class="d-flex justify-content-center">
+				<button @onclick="ImportarDatos" class="btn btn-primary" type="button">
+					Importar Datos <span class="oi oi-data-transfer-upload mx-2" />
+				</button>
+			</div>
+		</div>
+		<div class="col-md d-flex justify-content-center">
+			<hr class="d-flex d-md-none my-5 w-100" />
+			<hr class="vr d-none d-md-flex h-100" />
+		</div>
+		<div class="col-md d-flex align-items-center justify-content-center">
+			<button data-bs-toggle="modal" data-bs-target="#modalExportarDatos" class="btn btn-primary" @onclick="ExportarDatos">
+				Exportar Datos <span class="oi oi-data-transfer-download mx-2" />
+			</button>
+
+			<Modal ModalID="modalExportarDatos" ModalTitle="Exportar Datos" ShowButton="false">
+				<ModalBody>
+					<p class="centered-text">
+						<a href="@GeneratedFile">Descargar Archivo</a>
+					</p>
+					<ol class="justified-text">
+						<li>Haga click derecho (o deje presionado, si está en un dispositivo móvil) a "Descargar Archivo"</li>
+						<li>Seleccione cualquiera de estas opciones, dependiendo del idioma de su navegador:</li>
+						<ul>
+							<li>Guardar como...</li>
+							<li>Save as....</li>
+						</ul>
+					</ol>
+				</ModalBody>
+			</Modal>
+		</div>
+	</div>
 </div>
 
 <hr class="my-5" />
 
-<div class="d-flex justify-content-center">
-	<button data-bs-toggle="modal" data-bs-target="#modalExportarDatos" class="btn btn-primary" @onclick="ExportarDatos">
-		Exportar Datos <span class="oi oi-data-transfer-download mx-2" />
-	</button>
+<div class="d-flex align-content-center align-items-center align-middle justify-content-center">
+	<label class="form-label">Formato de hora:</label>
+	<div class="btn-group btn-group-sm ms-2" role="group">
+		<input type="radio" class="btn-check" name="btnFormatoHora" id="btn12H" @onclick='async () => await EstablecerFormatoHora(FormatoHora.hh)' checked="@(FormatoHoraInput == "hh")" />
+		<label class="btn btn-outline-primary" for="btn12H">12 horas (03:00 PM)</label>
+
+		<input type="radio" class="btn-check" name="btnFormatoHora" id="btn24H" @onclick='async () => await EstablecerFormatoHora(FormatoHora.HH)' checked="@(FormatoHoraInput == "HH")" />
+		<label class="btn btn-outline-primary" for="btn24H">24 horas (15:00)</label>
+	</div>
 </div>
-
-
-<Modal ModalID="modalExportarDatos" ModalTitle="Exportar Datos" ShowButton="false">
-	<ModalBody>
-		<p class="centered-text">
-			<a href="@GeneratedFile">Descargar Archivo</a>
-		</p>
-		<ol class="justified-text">
-			<li>Haga click derecho (o deje presionado, si está en un dispositivo móvil) a "Descargar Archivo"</li>
-			<li>Seleccione cualquiera de estas opciones, dependiendo del idioma de su navegador:</li>
-			<ul>
-				<li>Guardar como...</li>
-				<li>Save as....</li>
-			</ul>
-		</ol>
-	</ModalBody>
-</Modal>
-
-

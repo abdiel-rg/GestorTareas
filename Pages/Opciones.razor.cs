@@ -8,6 +8,8 @@ using GestorTareas.Data.Repositories;
 using System.Text.Json;
 using System.IO;
 using GestorTareas.Components;
+using GestorTareas.Data.Enums;
+using Microsoft.JSInterop;
 
 namespace GestorTareas.Pages
 {
@@ -21,6 +23,9 @@ namespace GestorTareas.Pages
 
         private string? GeneratedFile { get; set; } = null;
 
+        private string FormatoHoraInput { get; set; } = "HH";
+
+        private async Task EstablecerFormatoHora(FormatoHora formatoHora) => await localStorageRepository.Save("FormatoHora", formatoHora.ToString());
 
         private async Task<List<Tarea>> ProcesarDatos(Stream stream)
         {
@@ -60,9 +65,14 @@ namespace GestorTareas.Pages
         private async Task ExportarDatos()
         {
             await ToastComponent!.HideToast();
-            string? json = await localStorageRepository.Get(TareaRepository.LocalStorageEntryKey);
-            byte[]? buffer = json!.Select(c => (byte)c).ToArray();
+            string? json = await localStorageRepository.GetRawJsonOrDefault(TareaRepository.LocalStorageEntryKey, "[]");
+            byte[] buffer = json!.Select(c => (byte)c).ToArray();
             GeneratedFile = $"data:{System.Net.Mime.MediaTypeNames.Application.Json};base64,{Convert.ToBase64String(buffer)}";
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
+            FormatoHoraInput = (await localStorageRepository.GetOrDefault<string>("FormatoHora"))!;
         }
     }
 }

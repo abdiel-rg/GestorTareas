@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GestorTareas.Data;
+using GestorTareas.Data.Enums;
 
 namespace GestorTareas.Pages
 {
@@ -28,6 +29,8 @@ namespace GestorTareas.Pages
             });
         }
 
+        private string FormatoHora { get; set; } = "HH";
+
         private async Task RemoveTarea(Tarea tarea)
         {
             await tareaRepository.Remove(tarea);
@@ -39,6 +42,7 @@ namespace GestorTareas.Pages
         protected override async Task OnInitializedAsync()
         {
             await GetData();
+            FormatoHora = (await localStorageRepository.GetOrDefault("FormatoHora", "HH"))!;
 
             _ = InvokeAsync(async () =>
             {
