@@ -25,14 +25,34 @@
 				</ToastBody>
 			</Toast>
 
-			<InputFile accept=".json" class="form-control mb-3" OnChange="e => BrowserFile = e.File" />
-			<div class="d-flex justify-content-center">
-				<button @onclick="ImportarDatos" class="btn btn-primary" type="button">
+			<EditForm Model="this" class="d-flex justify-content-center flex-column gap-3">
+				<DataAnnotationsValidator />
+				<div class="btn-group" role="group">
+					<input type="radio" class="btn-check" name="btnImportarDatosInput" id="importarDatosArchivoInput" @onclick='() => OpcionElegida = OpcionImportar.Archivo' checked />
+					<label class="btn btn-outline-primary" for="importarDatosArchivoInput">Archivo</label>
+
+					<input type="radio" class="btn-check" name="btnImportarDatosInput" id="importarDatosTextoInput" @onclick='() => OpcionElegida = OpcionImportar.Texto' />
+					<label class="btn btn-outline-primary" for="importarDatosTextoInput">Texto</label>
+				</div>
+
+				@switch (OpcionElegida)
+				{
+					case OpcionImportar.Archivo:
+						<InputFile accept=".json" class="form-control" OnChange="e => BrowserFile = e.File" />
+						break;
+					case OpcionImportar.Texto:
+						<InputTextArea spellcheck="false" autocomplete="false" id="importarDatosTexto" @bind-Value="ImportedJsonText" />
+						break;
+					default:
+						break;
+				}
+
+				<button @onclick="ImportarDatos" class="btn btn-primary" type="submit">
 					Importar Datos <span class="oi oi-data-transfer-upload mx-2" />
 				</button>
-			</div>
+			</EditForm>
 		</div>
-		<div class="col-md d-flex justify-content-center">
+		<div class="col-md-1 d-flex justify-content-center">
 			<hr class="d-flex d-md-none my-5 w-100" />
 			<hr class="vr d-none d-md-flex h-100" />
 		</div>

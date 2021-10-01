@@ -17,49 +17,64 @@ namespace GestorTareas.Pages
     {
         private Toast? ToastComponent { get; set; }
 
-        private bool? DatosValidos { get; set; } = null;
-
         private IBrowserFile? BrowserFile { get; set; }
 
         private string? GeneratedFile { get; set; } = null;
 
         private string FormatoHoraInput { get; set; } = "HH";
 
+        [JsonValidator(typeof(IEnumerable<Tarea>), ErrorMessage = "Invalid JSON")]
+        public string ImportedJsonText { get; set; } = "";
+
+        private OpcionImportar OpcionElegida { get; set; } = OpcionImportar.Archivo;
+
         private async Task EstablecerFormatoHora(FormatoHora formatoHora) => await localStorageRepository.Save("FormatoHora", formatoHora.ToString());
 
-        private async Task<List<Tarea>> ProcesarDatos(Stream stream)
+        private static List<Tarea> ProcesarDatos(string json)
         {
             try
             {
-                DatosValidos = true;
+                return JsonSerializer.Deserialize<List<Tarea>>(json)!;
+            }
+            catch (Exception)
+            {
+                return new();
+            }
+        }
+
+        private static async Task<List<Tarea>> ProcesarDatos(Stream stream)
+        {
+            try
+            {
                 return (await JsonSerializer.DeserializeAsync<List<Tarea>>(stream))!;
             }
             catch (Exception)
             {
-                DatosValidos = false;
                 return new();
             }
         }
 
         private async Task ImportarDatos()
         {
-            if (BrowserFile is null)
+            List<Tarea> tareas;
+
+            switch (true)
             {
-                await ToastComponent!.ShowToast();
-                return;
+                case true when !string.IsNullOrWhiteSpace(ImportedJsonText) && OpcionElegida == OpcionImportar.Texto:
+                    tareas = ProcesarDatos(ImportedJsonText);
+                    break;
+
+                case true when BrowserFile is not null && OpcionElegida == OpcionImportar.Archivo:
+                    tareas = await ProcesarDatos(BrowserFile!.OpenReadStream());
+                    break;
+
+                default:
+                    await ToastComponent!.ShowToast();
+                    return;
             }
 
-            List<Tarea> tareas = await ProcesarDatos(BrowserFile!.OpenReadStream());
-
-            if ((bool)DatosValidos!)
-            {
-                await localStorageRepository.Save(TareaRepository.LocalStorageEntryKey, tareas);
-                Nav.NavigateTo(Nav.BaseUri);
-            }
-            else
-            {
-                await ToastComponent!.ShowToast();
-            }
+            await localStorageRepository.Save(TareaRepository.LocalStorageEntryKey, tareas);
+            Nav.NavigateTo(Nav.BaseUri);
         }
 
         private async Task ExportarDatos()
