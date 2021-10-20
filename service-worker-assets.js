@@ -5,6 +5,14 @@
       "url": "css\/app.css"
     },
     {
+      "hash": "sha256-sAcc18zvMnaJZrNT4v8J0T4HqzEUiUTlVFgDIywjQek=",
+      "url": "css\/bootstrap.min.css"
+    },
+    {
+      "hash": "sha256-zE\/thq0iW1fraUfVh4yJtyPWRmtNZa6Aqh1BntH1PFM=",
+      "url": "css\/bootstrap.min.css.map"
+    },
+    {
       "hash": "sha256-+Q44zfEaCMmXduni5Td+IgCbk8sSUQwES2nWs+KKQz0=",
       "url": "css\/open-iconic\/FONT-LICENSE"
     },
@@ -49,12 +57,20 @@
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-FuFk6deVgxBRIjDyNukJl7UBf8mFCBJxsHLyTwFe\/Bo=",
+      "hash": "sha256-G5f\/wIhMWPeJNAW6uvAjlXRZ0dzYVfFKcyF5uhRYq6M=",
       "url": "index.html"
     },
     {
       "hash": "sha256-v9HZaSX3Jigc5eZt3noZVoymgrvi92cV1Pfq8mK7pno=",
       "url": "manifest.json"
+    },
+    {
+      "hash": "sha256-\/hGxZHGQ57fXLp+NDusFZsZo\/PG21Bp2+hXYV5a6w+g=",
+      "url": "scripts\/bootstrap.min.js"
+    },
+    {
+      "hash": "sha256-9u6HziJ4xfVAw8NMYa\/1XUTuVUV7esg421Czz4IifDE=",
+      "url": "scripts\/bootstrap.min.js.map"
     },
     {
       "hash": "sha256-DcjJJrKodIt9hrCicBnBmcmPHuCiocNNxIM2SRgtUok=",
@@ -265,5 +281,5 @@
       "url": "_framework\/blazor.webassembly.js"
     }
   ],
-  "version": "Z\/T0ykdl"
+  "version": "igQgd97J"
 };
